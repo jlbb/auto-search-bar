@@ -1,11 +1,19 @@
+import { BaseAction, actionIds } from "../common";
+
 export type planetsState = {
-  name: string;
+  searchTerm: string;
+  planets: [];
 };
 
 export const planetsReducer = (
-  state: planetsState = { name: "" },
-  action: any
+  state: planetsState = { searchTerm: "", planets: [] },
+  action: BaseAction
 ) => {
-  if (action) console.log("Action", action);
+  switch (action.type) {
+    case actionIds.GET_PLANET_NAME_REQUEST:
+      return { ...state, searchTerm: action.payload };
+    case actionIds.GET_PLANET_NAME_COMPLETED:
+      return { ...state, planets: action.payload };
+  }
   return state;
 };
