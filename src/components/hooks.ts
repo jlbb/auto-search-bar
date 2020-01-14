@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react";
 
-export const useDebounce = (value: any, timeout: number = 1000) => {
-  const [state, setState] = useState(value);
+//https://nick.scialli.me/writing-a-custom-react-usedebounce-hook-with-typescript/
+export function useDebounce<T>(
+  initialValue: T,
+  timeout: number = 1000
+): [T, T, React.Dispatch<T>] {
+  const [value, setValue] = useState<T>(initialValue);
+  const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);
 
   useEffect(() => {
-    const handler = setTimeout(() => setState(value), timeout);
+    const debounce = setTimeout(() => {
+      setDebouncedValue(value);
+    }, timeout);
+    return () => {
+      clearTimeout(debounce);
+    };
+  }, [value, timeout]);
 
-    return () => clearTimeout(handler);
-  }, [value]);
-
-  return state;
-};
+  return [debouncedValue, value, setValue];
+}
