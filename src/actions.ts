@@ -5,7 +5,12 @@ export const getPlanetNameRequestAction = (searchTerm: string): BaseAction => ({
   payload: searchTerm
 });
 
-export const getPlanetNameCompletedAction = (name: string): BaseAction => ({
+export const getPlanetNameCompletedAction = (planets: []): BaseAction => ({
   type: actionIds.GET_PLANET_NAME_COMPLETED,
-  payload: name
+  payload: planets
+});
+
+export const getPlanetNameCancelAction = (): BaseAction => ({
+  type: actionIds.GET_PLANET_NAME_CANCEL,
+  payload: null
 });

@@ -2,7 +2,10 @@ import React from "react";
 import SearchInput from "../SearchInput";
 import PopupList from "../PopupList";
 import { useDispatch } from "react-redux";
-import { getPlanetNameRequestAction } from "../../actions";
+import {
+  getPlanetNameRequestAction,
+  getPlanetNameCancelAction
+} from "../../actions";
 
 const SearchBox: React.FC = () => {
   const dispatch = useDispatch();
@@ -11,9 +14,13 @@ const SearchBox: React.FC = () => {
     dispatch(getPlanetNameRequestAction(inputPlanet));
   };
 
+  const onCancelGetPlanets = () => {
+    dispatch(getPlanetNameCancelAction());
+  };
+
   return (
     <div className="SearchBox">
-      <SearchInput onSearch={onGetPlanets} />
+      <SearchInput onSearch={onGetPlanets} onCancel={onCancelGetPlanets} />
       <PopupList />
     </div>
   );

@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { debounce } from "lodash";
+import { useDebounce } from "../hooks";
 
 interface Props {
   onSearch: (term: string) => any;
+  onCancel: () => any;
 }
 
-const SearchInput: React.FC<Props> = ({ onSearch }) => {
+const SearchInput: React.FC<Props> = ({ onSearch, onCancel }) => {
   const [searchInput, setSearchInput] = useState<string>("");
 
-  const onSubmitSearch = debounce(() => onSearch(searchInput), 1000);
+  const onSubmitSearch = useDebounce(() => {
+    console.log("Debouncing submit search", searchInput);
+    searchInput !== "" ? onSearch(searchInput) : onCancel();
+  });
 
   return (
     <div className="SearchInput">
@@ -18,6 +22,9 @@ const SearchInput: React.FC<Props> = ({ onSearch }) => {
         onKeyUp={onSubmitSearch}
         type="text"
       />
+      <button type="submit" onClick={onCancel}>
+        Cancel
+      </button>
     </div>
   );
 };

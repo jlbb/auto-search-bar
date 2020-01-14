@@ -1,6 +1,9 @@
-import { call, put, takeLatest, select } from "redux-saga/effects";
+import { call, put, takeLatest, select, race, take } from "redux-saga/effects";
 import * as selectors from "./selectors";
-import { getPlanetNameCompletedAction } from "../actions";
+import {
+  getPlanetNameCompletedAction,
+  getPlanetNameCancelAction
+} from "../actions";
 import { actionIds } from "../common";
 import { getPlanets } from "../api/sw-planets";
 
@@ -11,9 +14,22 @@ export function* watchGetPlanetsRequest() {
 function* requestGetPlanets() {
   const planetName = yield select(selectors.planets);
 
-  const planets = yield call(getPlanets, planetName);
+  /** Empty planetName cancellation can be overriden if _CompletedAction request arrives later.
+   * Use redux-saga task race */
+  // if (planetName !== "") {
+  //   const planets = yield call(getPlanets, planetName);
+  //   console.log("Selector Planet name", planetName, planets);
 
-  console.log("Selector Planet name", planetName, planets);
+  //   yield put(getPlanetNameCompletedAction(planets));
+  // } else {
+  //   yield put(getPlanetNameCancelAction());
+  // }
 
-  yield put(getPlanetNameCompletedAction(planets));
+  const { planets, cancel } = yield race({
+    planets: call(getPlanets, planetName),
+    cancel: take(actionIds.GET_PLANET_NAME_CANCEL)
+  });
+  if (!cancel) {
+    yield put(getPlanetNameCompletedAction(planets));
+  }
 }

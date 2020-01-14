@@ -14,6 +14,8 @@ export const planetsReducer = (
       return { ...state, searchTerm: action.payload };
     case actionIds.GET_PLANET_NAME_COMPLETED:
       return { ...state, planets: action.payload };
+    case actionIds.GET_PLANET_NAME_CANCEL:
+      return { ...state, planets: action.payload };
   }
   return state;
 };
