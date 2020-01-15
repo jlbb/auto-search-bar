@@ -23,7 +23,6 @@ const SearchBox: React.FC = () => {
     } else {
       dispatch(getPlanetNameRequestAction(inputPlanet));
     }
-    // dispatch(getPlanetNameRequestAction(inputPlanet));
   };
 
   const onCancelGetPlanets = () => {

@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import classNames from "classnames";
+import { highlightSubstr } from "../../common/utils";
 
 interface Props {
   term?: string;
@@ -12,18 +14,30 @@ const PopupList: React.FC<Props> = ({ term = "", list, onSelect }) => {
   };
 
   return list ? (
-    <ul className="PopupList">
-      {list.length > 0
-        ? list.map((item, idx) => (
+    <ul
+      className={classNames("PopupList", {
+        active: list.length > 0
+      })}
+    >
+      {list.length > 0 ? (
+        list.map((item, idx) => {
+          return (
             <li
               className="PopupList-item"
               key={`${item.name}-${idx}`}
               onClick={() => onSelectItem(item)}
             >
-              {item.name}
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: highlightSubstr(item.name, term)
+                }}
+              />
             </li>
-          ))
-        : "Not found results"}
+          );
+        })
+      ) : (
+        <li className="PopupList-item notFound">"Not found results"</li>
+      )}
     </ul>
   ) : null;
 };

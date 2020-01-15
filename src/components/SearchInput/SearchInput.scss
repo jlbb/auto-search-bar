@@ -1,7 +1,7 @@
 .SearchInput {
   display: flex;
   justify-content: center;
-  margin: 25px auto;
+  margin: 25px auto 10px auto;
   max-width: 1000px;
   position: relative;
   width: 100%;
@@ -34,7 +34,8 @@
       visibility: visible;
     }
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       cursor: pointer;
 
       .ClearIcon {
