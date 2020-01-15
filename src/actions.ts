@@ -2,7 +2,7 @@ import { BaseAction, actionIds } from "./common";
 
 export const getPlanetNameRequestAction = (
   searchTerm: string,
-  makeRequest: boolean = true
+  makeRequest: boolean | null = true
 ): BaseAction => ({
   type: actionIds.GET_PLANET_NAME_REQUEST,
   payload: { searchActive: makeRequest, searchTerm }

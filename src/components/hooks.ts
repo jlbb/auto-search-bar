@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-//https://nick.scialli.me/writing-a-custom-react-usedebounce-hook-with-typescript/
+// https://nick.scialli.me/writing-a-custom-react-usedebounce-hook-with-typescript/
 export const useDebounce = <T>(
   initialValue: T,
   timeout: number = 1000
@@ -18,4 +18,25 @@ export const useDebounce = <T>(
   }, [value, timeout]);
 
   return [debouncedValue, value, setValue];
+};
+
+// https://stackoverflow.com/a/42234988/1186541
+export const useOutsideNotifier = (ref: any, callback: any) => {
+  /**
+   * Execute the callback if clicked on outside of element
+   */
+  function handleClickOutside(event: any) {
+    if (ref.current && !ref.current.contains(event.target)) {
+      callback();
+    }
+  }
+
+  useEffect(() => {
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
 };

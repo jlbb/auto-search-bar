@@ -6,6 +6,7 @@
   height: fit-content;
   margin: 0;
   max-height: 500px;
+  outline: none;
   overflow: hidden;
   overflow-y: auto;
   padding: 0;
@@ -18,8 +19,10 @@
     height: 24px;
     padding: 15px;
 
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: darkred;
+      outline: none;
     }
 
     &.notFound {

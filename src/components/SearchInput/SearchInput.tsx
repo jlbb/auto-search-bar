@@ -24,7 +24,9 @@ const SearchInput: React.FC<Props> = ({
   );
 
   useEffect(() => {
-    debouncedValue !== "" && onSearch(searchInput);
+    debouncedValue !== "" &&
+      debouncedValue !== inputValue &&
+      onSearch(searchInput);
   }, [debouncedValue]);
 
   useEffect(() => {
@@ -34,6 +36,7 @@ const SearchInput: React.FC<Props> = ({
   useEffect(() => {
     const refValue = inputRef.current.value;
     inputRef.current.value = refValue !== inputValue ? inputValue : refValue;
+    setSearchInput(inputValue);
   }, [inputValue]);
 
   const onClearSearch = (): void => {
@@ -49,7 +52,9 @@ const SearchInput: React.FC<Props> = ({
         onChange={e => {
           setSearchInput(e.target.value);
         }}
+        onKeyDown={e => (e.keyCode === 13 ? onSearch(searchInput) : null)}
         ref={inputRef}
+        tabIndex={1}
         type="text"
       />
 
@@ -65,6 +70,7 @@ const SearchInput: React.FC<Props> = ({
         })}
         type="submit"
         onClick={onClearSearch}
+        tabIndex={2}
       >
         <ClearIcon />
       </button>

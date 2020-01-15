@@ -31,7 +31,7 @@ const SearchBox: React.FC = () => {
 
   const onSelectListPlanet = (planetName: string) => {
     planetName !== searchInput &&
-      dispatch(getPlanetNameRequestAction(planetName, false));
+      dispatch(getPlanetNameRequestAction(planetName, null));
   };
 
   return (
