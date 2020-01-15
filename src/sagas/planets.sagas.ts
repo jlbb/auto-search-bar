@@ -9,13 +9,29 @@ export function* watchGetPlanetsRequest() {
 }
 
 function* requestGetPlanets() {
-  const planetName = yield select(selectors.planets);
+  const planetName = yield select(selectors.searchTerm);
+  const searchActive = yield select(selectors.searchActive);
 
-  const { planets, cancel } = yield race({
-    planets: call(getPlanets, planetName),
-    cancel: take(actionIds.GET_PLANET_NAME_CANCEL)
-  });
-  if (!cancel) {
-    yield put(getPlanetNameCompletedAction(planets));
+  if (searchActive) {
+    const { planets, cancel } = yield race({
+      planets: call(getPlanets, planetName),
+      cancel: take(actionIds.GET_PLANET_NAME_CANCEL)
+    });
+    if (!cancel) {
+      yield put(getPlanetNameCompletedAction(planets));
+    }
+  } else {
+    const planets = yield select(selectors.planets);
+    const filteredPlanets =
+      planets &&
+      planets.filter((planet: any) => {
+        if (
+          new RegExp(planetName.toLowerCase()).test(planet.name.toLowerCase())
+        ) {
+          return planet;
+        }
+      });
+
+    yield put(getPlanetNameCompletedAction(filteredPlanets));
   }
 }

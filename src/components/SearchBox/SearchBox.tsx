@@ -6,28 +6,48 @@ import {
   getPlanetNameRequestAction,
   getPlanetNameCancelAction
 } from "../../actions";
+import { searchActive, searchTerm, planets } from "../../sagas/selectors";
 
 const SearchBox: React.FC = () => {
   const dispatch = useDispatch();
 
-  const searchActive = useSelector((state: any) => state.planets.searchActive);
+  const searchLoading = useSelector(searchActive);
+  const searchInput = useSelector(searchTerm);
+  const searchList = useSelector(planets);
 
   const onGetPlanets = (inputPlanet: string) => {
-    dispatch(getPlanetNameRequestAction(inputPlanet));
+    const rgx = new RegExp(`${searchInput.toLowerCase()}`);
+
+    if (searchInput && rgx.test(inputPlanet.toLowerCase())) {
+      dispatch(getPlanetNameRequestAction(inputPlanet, false));
+    } else {
+      dispatch(getPlanetNameRequestAction(inputPlanet));
+    }
+    // dispatch(getPlanetNameRequestAction(inputPlanet));
   };
 
   const onCancelGetPlanets = () => {
     dispatch(getPlanetNameCancelAction());
   };
 
+  const onSelectListPlanet = (planetName: string) => {
+    planetName !== searchInput &&
+      dispatch(getPlanetNameRequestAction(planetName, false));
+  };
+
   return (
     <div className="SearchBox">
       <SearchInput
-        loading={searchActive}
+        inputValue={searchInput}
+        loading={searchLoading}
         onSearch={onGetPlanets}
         onCancel={onCancelGetPlanets}
       />
-      <PopupList />
+      <PopupList
+        term={searchInput}
+        list={searchList}
+        onSelect={onSelectListPlanet}
+      />
     </div>
   );
 };

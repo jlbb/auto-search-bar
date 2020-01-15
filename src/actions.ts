@@ -1,8 +1,11 @@
 import { BaseAction, actionIds } from "./common";
 
-export const getPlanetNameRequestAction = (searchTerm: string): BaseAction => ({
+export const getPlanetNameRequestAction = (
+  searchTerm: string,
+  makeRequest: boolean = true
+): BaseAction => ({
   type: actionIds.GET_PLANET_NAME_REQUEST,
-  payload: searchTerm
+  payload: { searchActive: makeRequest, searchTerm }
 });
 
 export const getPlanetNameCompletedAction = (planets: []): BaseAction => ({
@@ -11,6 +14,5 @@ export const getPlanetNameCompletedAction = (planets: []): BaseAction => ({
 });
 
 export const getPlanetNameCancelAction = (): BaseAction => ({
-  type: actionIds.GET_PLANET_NAME_CANCEL,
-  payload: null
+  type: actionIds.GET_PLANET_NAME_CANCEL
 });

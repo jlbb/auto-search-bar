@@ -34,8 +34,12 @@
       visibility: visible;
     }
 
-    &:hover {
+    &:hover, &:focus {
       cursor: pointer;
+
+      .ClearIcon {
+        fill: red;
+      }
     }
   }
 }

@@ -8,5 +8,3 @@ export interface BaseAction {
   type: string;
   payload?: any;
 }
-
-export const swBaseUrl = "https://swapi.co/api";
