@@ -1,4 +1,3 @@
-import axios from "axios";
 import { swBaseUrl, apiGet } from "../common/api";
 
 export const getPlanets = async (

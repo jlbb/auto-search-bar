@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
+import classNames from "classnames";
 import { useDebounce } from "../hooks";
 import ClearIcon from "../ClearIcon";
 import LoadingIcon from "../LoadingIcon";
-import classNames from "classnames";
 
 interface Props {
   inputValue: string;

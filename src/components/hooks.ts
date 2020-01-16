@@ -22,9 +22,7 @@ export const useDebounce = <T>(
 
 // https://stackoverflow.com/a/42234988/1186541
 export const useOutsideNotifier = (ref: any, callback: any) => {
-  /**
-   * Execute the callback if clicked on outside of element
-   */
+  // Execute the callback if clicked on outside of element
   function handleClickOutside(event: any) {
     if (ref.current && !ref.current.contains(event.target)) {
       callback();
@@ -32,10 +30,8 @@ export const useOutsideNotifier = (ref: any, callback: any) => {
   }
 
   useEffect(() => {
-    // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
   });

@@ -1,12 +1,26 @@
 import React from "react";
 import { render } from "@testing-library/react";
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
 import App from "./App";
 
-describe("App", () => {
-  test("renders SearchBox app", () => {
-    const app = render(<App />);
-    console.log("App", app);
+const mockedStore = {
+  planets: {}
+};
 
-    expect(app).toBeDefined();
-  });
+const mockStore = configureMockStore([]);
+
+let store: any;
+let app: any;
+
+beforeAll(() => {
+  store = mockStore(mockedStore);
+  app = render(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+});
+test("loads and displays App component", async () => {
+  expect(app).toBeDefined();
 });

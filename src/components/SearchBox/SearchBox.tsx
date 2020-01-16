@@ -43,7 +43,7 @@ const SearchBox: React.FC = () => {
         onCancel={onCancelGetPlanets}
       />
       <PopupList
-        term={searchInput}
+        highlight={searchInput}
         list={searchList}
         onSelect={onSelectListPlanet}
       />

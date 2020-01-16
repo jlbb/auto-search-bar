@@ -1,4 +1,4 @@
-export const highlightSubstr = (str: string, term: string) => {
+export const highlightSubstr = (str: string, term: string): string => {
   const rgx = new RegExp(term.toLowerCase());
   const match = str.toLowerCase().match(rgx);
 

@@ -4,12 +4,12 @@ import { highlightSubstr } from "../../common/utils";
 import { useOutsideNotifier } from "../hooks";
 
 interface Props {
-  term?: string;
+  highlight?: string;
   list: any;
   onSelect?: (item: any) => any;
 }
 
-const PopupList: React.FC<Props> = ({ term = "", list, onSelect }) => {
+const PopupList: React.FC<Props> = ({ highlight = "", list, onSelect }) => {
   const [popupList, setPopupList] = useState();
   const ulRef = useRef(null);
   useOutsideNotifier(ulRef, () => setPopupList(null));
@@ -50,12 +50,12 @@ const PopupList: React.FC<Props> = ({ term = "", list, onSelect }) => {
               className="PopupList-item"
               key={`${item.name}-${idx}`}
               onClick={() => onSelectItem(item)}
-              onKeyPress={() => onSelectItem(item)}
+              onKeyPress={e => (e.keyCode === 13 ? onSelectItem(item) : null)}
               tabIndex={3 + idx}
             >
               <span
                 dangerouslySetInnerHTML={{
-                  __html: highlightSubstr(item.name, term)
+                  __html: highlightSubstr(item.name, highlight)
                 }}
               />
             </li>

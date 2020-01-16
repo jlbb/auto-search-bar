@@ -1,6 +1,17 @@
 .App {
   text-align: center;
   padding: 15px;
+
+  h1 {
+    color: gold;
+    font-weight: normal;
+    text-shadow: 1px 2px black;
+  }
+}
+
+.highlight {
+  font-weight: bold;
+  color: gold;
 }
 
 @-webkit-keyframes rotating /* Safari and Chrome */ {
